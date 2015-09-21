@@ -1,0 +1,25 @@
+{
+  "name": "cv-online-website",
+  "version": "1.0.0",
+  "description": "Parte web del proyecto de cv-online",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "prestart": "npm install",
+    "postinstall": "bower install",
+    "start": "http-server app -a localhost -p 3000 -c-1"
+  },
+  "dependencies": {
+    "bower": "latest",
+    "debug": "~2.2.0",
+    "http-server": "^0.6.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://mchl0208@github.com/mchl0208/cv-online-website.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mchl0208/cv-online-website/issues"
+  },
+  "homepage": "https://github.com/mchl0208/cv-online-website#readme"
+}
