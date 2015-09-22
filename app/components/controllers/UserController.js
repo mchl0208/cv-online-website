@@ -37,13 +37,8 @@ cvApp.controller('UserController', function($scope, $http) {
 
 		FB.getLoginStatus(function(response) {
 			if (response.status === 'connected') {
-				console.log('connected');
 				logInAPI(response.authResponse.accessToken);
-				//if (status)
- 					//RegisterInAPI(response.authResponse);
- 				//else
- 					//$scope.user.isLogged = false;
-		    } 
+		    }
 		});
 	};
 
@@ -52,7 +47,6 @@ cvApp.controller('UserController', function($scope, $http) {
 		var method = '/user/login';
 		var Furl = $scope.API_url + method;
 
-		//token = "BAAHyW2bhOKkBAAvNjV04RpYf4PZAjIEbHGanyLE4W96nbCBtuW5BLkjmDaXpvIT3UaNCRrXaoAV76oAiBJZBssVbZBrIApUgN1x4xe76nwViJWYGnUcxreIX8ozMgOsEM5YJwrDZAzfzyFvnq4ETDzR6JlyZB1wDpuopmrkyxYdZBj9ZCEoYY4ztCPtUywDVcEZD";
 		$http({
             url: Furl,
             method: "POST",
@@ -61,7 +55,6 @@ cvApp.controller('UserController', function($scope, $http) {
         }).then(function(response) {
         	    $scope.user = response.data;
  				$scope.user.isLogged = true;
-            	console.log(response.data);
 	        }, 
 	        function(response) { // optional
 	        	if (response.data.message == "No user registered with that Facebook ID"){
@@ -69,8 +62,7 @@ cvApp.controller('UserController', function($scope, $http) {
 	        	}
 	        }
 	    );
-		return true;
-	}
+	};
 
 	function RegisterInAPI(token){
 		var method = '/user/create';
@@ -87,12 +79,11 @@ cvApp.controller('UserController', function($scope, $http) {
 	};
 
 	$scope.fbLogOut = function () {
-		// FB.logout(function(response) {
-		// 	$scope.user = {};
- 	// 		$scope.user.isLogged = false;
-		// });
-FB.logout();
-
+		FB.logout(function(response) {
+			$scope.user = {};
+ 			$scope.user.isLogged = false;
+		});
+		window.location.reload(false); 
 	};
 });
 
