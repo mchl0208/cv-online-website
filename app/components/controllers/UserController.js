@@ -4,15 +4,14 @@
 // set for Route Controller
 cvApp.controller('UserController', function($scope, $http) {
 	$scope.API_url = 'http://api.cvonline.aliensoft.net';
-
 	$scope.user = {};
  	$scope.user.isLogged = false;
- 	$scope.user.fbAuth = null;
 
  	$scope.template = {
 		"headerHome": "components/views/headers/header-home.html",
 		"partSlider": "components/views/partials/part-slider.html",
-		"header" : "components/views/headers/header.html"
+		"header" : "components/views/headers/header.html",
+		"sidebar" : "components/views/partials/side-bar.html"
 	}
 
 	window.fbAsyncInit = function() {
@@ -38,6 +37,7 @@ cvApp.controller('UserController', function($scope, $http) {
 
 		FB.getLoginStatus(function(response) {
 			if (response.status === 'connected') {
+				console.log('connected');
 				logInAPI(response.authResponse.accessToken);
 				//if (status)
  					//RegisterInAPI(response.authResponse);
@@ -52,22 +52,27 @@ cvApp.controller('UserController', function($scope, $http) {
 		var method = '/user/login';
 		var Furl = $scope.API_url + method;
 
+		//token = "BAAHyW2bhOKkBAAvNjV04RpYf4PZAjIEbHGanyLE4W96nbCBtuW5BLkjmDaXpvIT3UaNCRrXaoAV76oAiBJZBssVbZBrIApUgN1x4xe76nwViJWYGnUcxreIX8ozMgOsEM5YJwrDZAzfzyFvnq4ETDzR6JlyZB1wDpuopmrkyxYdZBj9ZCEoYY4ztCPtUywDVcEZD";
 		$http({
             url: Furl,
             method: "POST",
             data: {fb_token: token},
             headers: {'Content-Type': 'application/json'}
         }).then(function(response) {
+        	    $scope.user = response.data;
+ 				$scope.user.isLogged = true;
             	console.log(response.data);
 	        }, 
 	        function(response) { // optional
-	            // failed
+	        	if (response.data.message == "No user registered with that Facebook ID"){
+	        		RegisterInAPI(token)
+	        	}
 	        }
 	    );
 		return true;
 	}
 
-	function RegisterInAPI(authResponse){
+	function RegisterInAPI(token){
 		var method = '/user/create';
 		var Furl = $scope.API_url + method;
 
@@ -75,10 +80,19 @@ cvApp.controller('UserController', function($scope, $http) {
             url: Furl,
             method: "POST",
             data: {fb_token : token, is_admin : '0'},
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            headers: {'Content-Type': 'application/json'}
         }).then(function(response) {
-            return response;
+            logInAPI(response.data.fb_token);
 	    });
+	};
+
+	$scope.fbLogOut = function () {
+		// FB.logout(function(response) {
+		// 	$scope.user = {};
+ 	// 		$scope.user.isLogged = false;
+		// });
+FB.logout();
+
 	};
 });
 

@@ -16,6 +16,7 @@
       <div ng-switch on="user.isLogged">
         <div ng-switch-when="true">
           <div ng-include="template.header"></div>
+          <div ng-include="template.sidebar"></div>
         </div>
         <div ng-switch-when="false">
           <div ng-include="template.headerHome"></div>
