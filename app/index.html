@@ -12,7 +12,7 @@
   <div id="status">
   </div>
   <div class="skin-blue sidebar-mini">
-    <div ng-controller="UserController">
+    <div ng-controller="UserController" id="UserControllerId">
       <div ng-switch on="user.isLogged">
         <div ng-switch-when="true">
           <div ng-include="template.header"></div>

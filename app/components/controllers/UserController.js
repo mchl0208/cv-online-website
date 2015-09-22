@@ -23,26 +23,14 @@ cvApp.controller('UserController', function($scope, $http) {
 			version    : 'v2.4' // use version 2.2
 		});
 
-		// Now that we've initialized the JavaScript SDK, we call 
-		// FB.getLoginStatus().  This function gets the state of the
-		// person visiting this page and can return one of three states to
-		// the callback you provide.  They can be:
-		//
-		// 1. Logged into your app ('connected')
-		// 2. Logged into Facebook, but not your app ('not_authorized')
-		// 3. Not logged into Facebook and can't tell if they are logged into
-		//    your app or not.
-		//
-		// These three cases are handled in the callback function.
-
 		FB.getLoginStatus(function(response) {
 			if (response.status === 'connected') {
-				logInAPI(response.authResponse.accessToken);
+				$scope.logInAPI(response.authResponse.accessToken);
 		    }
 		});
 	};
 
-	function logInAPI(token){
+	$scope.logInAPI = function(token){
 		//Simple POST request example (passing data) :
 		var method = '/user/login';
 		var Furl = $scope.API_url + method;
@@ -74,7 +62,7 @@ cvApp.controller('UserController', function($scope, $http) {
             data: {fb_token : token, is_admin : '0'},
             headers: {'Content-Type': 'application/json'}
         }).then(function(response) {
-            logInAPI(response.data.fb_token);
+            $scope.logInAPI(response.data.fb_token);
 	    });
 	};
 
@@ -86,6 +74,22 @@ cvApp.controller('UserController', function($scope, $http) {
 		window.location.reload(false); 
 	};
 });
+
+	function checkFBloginStatus()
+	{
+		var virtualScope = angular.element(document.getElementById('UserControllerId')).scope();
+
+		FB.getLoginStatus(function(response) {
+			if (response.status === 'connected') {
+				virtualScope.logInAPI(response.authResponse.accessToken);
+		    }
+		    else{
+		    	FB.login(function(response) {
+					virtualScope.logInAPI(response.authResponse.accessToken);
+				});
+		    }
+		});
+	}
 
   // Load the SDK asynchronously
   (function(d, s, id) {
