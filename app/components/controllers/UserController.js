@@ -58,20 +58,37 @@ cvApp.controller('UserController', function($scope, $http, $modal) {
 	};
 
 	$scope.changeRol = function(user){
-		//Simple POST request example (passing data) :
-		var method = '/user/' + user.fb_id + '/edit';
-		var Furl = $scope.API_url + method;
 
-		$http({
-            url: Furl,
-            method: "PUT",
-            data: {is_admin : user.is_admin ? 1 : 0},
-            headers: {'Content-Type': 'application/json', "X-Session-Id": $scope.user.session_id}
-        }).then(function(response) {
-	        }, 
-	        function(response) { // optional
-	        }
-	    );
+		var modalInstance = $modal.open({
+	      animation: false,
+	      templateUrl: 'RolUser.html',
+	      controller: 'ModalInstanceCtrl',
+	      //size: size
+	    });
+
+	    modalInstance.result.then(function (confirm) {
+	      if (confirm == true)
+	      {
+	      	var method = '/user/' + user.fb_id + '/edit';
+			var Furl = $scope.API_url + method;
+
+			$http({
+	            url: Furl,
+	            method: "PUT",
+	            data: {is_admin : user.is_admin ? 1 : 0},
+	            headers: {'Content-Type': 'application/json', "X-Session-Id": $scope.user.session_id}
+	        }).then(function(response) {
+		        	
+		        }, 
+		        function(response) { // optional
+		        }
+		    );
+	      }
+	    }, function () {
+	      //$log.info('Modal dismissed at: ' + new Date());
+	    });
+		// //Simple POST request example (passing data) :
+		
 	}
 
 	$scope.logInAPI = function(token){
