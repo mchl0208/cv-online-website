@@ -9,15 +9,11 @@ cvApp.config(function($routeProvider, $locationProvider) {
 	**/
 	.when('/', {
 		controller: 'UserController',
-		// resolve:{
-	 //        "check":function(accessFac,$location){   //function to be resolved, accessFac and $location Injected
-	 //            console.log("is log" + accessFac.isLogged());
-	 //            if(accessFac.isLogged()){    //check if the user has permission -- This happens before the page loads
-	 //                $location.path('/home');   
-	 //            }
-	 //        }
-	 //    }
 	})
+	.when('/user/list', {
+        templateUrl: '/components/views/partials/userList.html',
+        controller: 'UserController'
+    })
 	// if not match with any route config then send to home page
 	.otherwise({
 		redirectTo: '/'

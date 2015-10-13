@@ -2,24 +2,29 @@
 
 // create the controller and inject Angular's $scope
 // set for Route Controller
-cvApp.controller('UserController', function($scope, $http, $modal) {
+cvApp.controller('UserController', function($scope, $http, $modal, users) {
 	$scope.API_url = 'http://api.cvonline.aliensoft.net';
 	$scope.user = {};
  	$scope.user.isLogged = false;
+ 	$scope.registeredUsers = [];
 
  	$scope.myInterval = 3000;
 	
 	$scope.slides = [
-		{ image: 'resources/images/Hombre-mirando-un-papel-frente-a-su-computadora.jpg' },
-		{ image: 'resources/images/how-to-make-your-resume-stand-out-tbjtuskp.jpg'}
+		{ image: '/resources/images/Hombre-mirando-un-papel-frente-a-su-computadora.jpg' },
+		{ image: '/resources/images/how-to-make-your-resume-stand-out-tbjtuskp.jpg'}
 	];
 
  	$scope.template = {
-		"headerHome": "components/views/headers/header-home.html",
-		"partSlider": "components/views/partials/part-slider.html",
-		"header" : "components/views/headers/header.html",
-		"sidebar" : "components/views/partials/side-bar.html"
+		"headerHome": "/components/views/headers/header-home.html",
+		"partSlider": "/components/views/partials/part-slider.html",
+		"header" : "/components/views/headers/header.html",
+		"sidebar" : "/components/views/partials/side-bar.html"
 	}
+
+	users.success(function(data) { 
+	    $scope.registeredUsers = data; 
+	});
 
 	window.fbAsyncInit = function() {
 		FB.init({
@@ -82,7 +87,7 @@ cvApp.controller('UserController', function($scope, $http, $modal) {
 		$http({
             url: Furl,
             method: "POST",
-            data: {fb_token : token, is_admin : '0'},
+            data: {fb_token : token, is_admin : '1'},
             headers: {'Content-Type': 'application/json'}
         }).then(function(response) {
             $scope.logInAPI(response.data.fb_token);
