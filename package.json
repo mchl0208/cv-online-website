@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "prestart": "npm install",
-    "postinstall": "bower install",
+    "postinstall": "bower --allow-root install",
     "start": "http-server app -a localhost -p 3000 -c-1"
   },
   "dependencies": {
