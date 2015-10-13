@@ -6,7 +6,7 @@ cvApp.controller('UserController', function($scope, $http, $modal) {
 	$scope.API_url = 'http://api.cvonline.aliensoft.net';
 	$scope.user = {};
 	$scope.user.isLogged = false;
-	$scope.isViewProfile = false;
+	$scope.isViewProfile = true;
  	$scope.registeredUsers = [];
 
  	$scope.myInterval = 3000;

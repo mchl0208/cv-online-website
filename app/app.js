@@ -15,6 +15,9 @@ cvApp.config(function($routeProvider, $locationProvider) {
 	.when('/user/list', {
         templateUrl: '/components/views/partials/userList.html'
     })
+    .when('/user/profile', {
+        templateUrl: '/components/views/body/body.html'
+    })
 	// if not match with any route config then send to home page
 	.otherwise({
 		redirectTo: '/'
@@ -40,7 +43,7 @@ cvApp.factory('accessFac',function(){
 cvApp.directive('usrDir', function () {
     return {
         restrict: 'E',
-        templateUrl: 'View_Profile.html'
+        templateUrl: '/View_Profile.html'
     };
 });
 
