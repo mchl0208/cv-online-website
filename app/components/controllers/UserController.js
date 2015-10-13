@@ -136,7 +136,7 @@ cvApp.controller('UserController', function($scope, $http, $modal) {
 	$scope.closeViewProfile = function () {
 	    $scope.isViewProfile = false;
 	};
-    //End code added.
+    //End code added
 	
 	$scope.openDeleteAccount = function (size) {
 
