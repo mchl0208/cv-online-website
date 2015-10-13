@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
   <title>CV Online</title>
@@ -14,11 +14,14 @@
   <div class="skin-blue sidebar-mini">
     <div >
       <div ng-switch on="user.isLogged">
+        <!--<div ng-switch-when="false">-->
         <div ng-switch-when="true">
           <div ng-include="template.header"></div>
+          <div ng-include="template.body"></div><!--Code added by Frank-->
           <div ng-include="template.sidebar"></div>
         </div>
         <div ng-switch-when="false">
+        <!--<div ng-switch-when="true">-->
           <div ng-include="template.headerHome"></div>
           <div ng-include="template.partSlider"></div>
         </div>

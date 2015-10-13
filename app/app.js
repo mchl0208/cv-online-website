@@ -1,3 +1,5 @@
+/// <reference path="components/views/headers/View_Profile.html" />
+/// <reference path="components/views/headers/View_Profile.html" />
 //create a module cvApp
 var cvApp = angular.module('cvApp', ['ngRoute', 'ui.bootstrap']);
 
@@ -32,3 +34,15 @@ cvApp.factory('accessFac',function(){
     }
     return obj;
 });
+
+//code added by Frank JAvier 
+//Creando directica
+cvApp.directive('usrDir', function () {
+    return {
+        restrict: 'E',
+        templateUrl: 'View_Profile.html'
+    };
+});
+
+//-------------------------
+
