@@ -8,11 +8,11 @@
   <link rel='stylesheet' href='/resources/stylesheets/style.css' />
   <script src="/resources/plugins/jQuery/jQuery-2.1.4.min.js" type="text/javascript"></script>
 </head>
-<body class="skin-blue sidebar-mini" ng-app="cvApp">
+<body class="skin-blue sidebar-mini" ng-app="cvApp" ng-controller="UserController" id="UserControllerId"> 
   <div id="status">
   </div>
   <div class="skin-blue sidebar-mini">
-    <div ng-controller="UserController" id="UserControllerId">
+    <div >
       <div ng-switch on="user.isLogged">
         <div ng-switch-when="true">
           <div ng-include="template.header"></div>

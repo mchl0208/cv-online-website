@@ -11,8 +11,7 @@ cvApp.config(function($routeProvider, $locationProvider) {
 		controller: 'UserController',
 	})
 	.when('/user/list', {
-        templateUrl: '/components/views/partials/userList.html',
-        controller: 'UserController'
+        templateUrl: '/components/views/partials/userList.html'
     })
 	// if not match with any route config then send to home page
 	.otherwise({

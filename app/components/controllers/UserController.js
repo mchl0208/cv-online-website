@@ -2,7 +2,7 @@
 
 // create the controller and inject Angular's $scope
 // set for Route Controller
-cvApp.controller('UserController', function($scope, $http, $modal, users) {
+cvApp.controller('UserController', function($scope, $http, $modal) {
 	$scope.API_url = 'http://api.cvonline.aliensoft.net';
 	$scope.user = {};
  	$scope.user.isLogged = false;
@@ -22,9 +22,21 @@ cvApp.controller('UserController', function($scope, $http, $modal, users) {
 		"sidebar" : "/components/views/partials/side-bar.html"
 	}
 
-	users.success(function(data) { 
-	    $scope.registeredUsers = data; 
-	});
+	function getRegisteredUsers () {
+		$.ajax({
+		  method: 'GET',
+		 url: 'http://api.cvonline.aliensoft.net/user/list',
+		 headers: {'Content-Type': 'application/json', "X-Session-Id": $scope.user.session_id},
+		 success: function(data) { 
+	            $scope.registeredUsers = (data.users);
+	            $scope.$apply();
+	        	console.log($scope.registeredUsers);
+	        },
+	    error: function(data) { 
+	            return data;
+	        }
+		});
+	}
 
 	window.fbAsyncInit = function() {
 		FB.init({
@@ -42,6 +54,23 @@ cvApp.controller('UserController', function($scope, $http, $modal, users) {
 		});
 	};
 
+	$scope.changeRol = function(user){
+		//Simple POST request example (passing data) :
+		var method = '/user/' + user.fb_id + '/edit';
+		var Furl = $scope.API_url + method;
+
+		$http({
+            url: Furl,
+            method: "PUT",
+            data: {is_admin : user.is_admin ? 1 : 0},
+            headers: {'Content-Type': 'application/json', "X-Session-Id": $scope.user.session_id}
+        }).then(function(response) {
+	        }, 
+	        function(response) { // optional
+	        }
+	    );
+	}
+
 	$scope.logInAPI = function(token){
 		//Simple POST request example (passing data) :
 		var method = '/user/login';
@@ -55,6 +84,7 @@ cvApp.controller('UserController', function($scope, $http, $modal, users) {
         }).then(function(response) {
         	    $scope.user = response.data;
  				$scope.user.isLogged = true;
+ 				getRegisteredUsers();
 	        }, 
 	        function(response) { // optional
 	        	if (response.data.message == "No user registered with that Facebook ID"){

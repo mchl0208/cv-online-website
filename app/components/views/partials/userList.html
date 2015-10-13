@@ -38,12 +38,18 @@
                     </thead>
                     <tbody ng-repeat="user in registeredUsers">
                       <tr>
-                        <td>Trident</td>
-                        <td>Internet
-                          Explorer 4.0</td>
-                        <td>Win 95+</td>
-                        <td> 4</td>
-                        <td>X</td>
+                        <td>{{user.name}}</td>
+                        <td>{{user.lastName}}</td>
+                        <td>{{user.email}}</td>
+                        <td>{{user.telephone}}</td>
+                        <td>
+                            <input type="checkbox" 
+                                   ng-model="user.is_admin" 
+                                   ng-true-value="true" 
+                                   ng-false-value="false"
+                                   ng-Change="changeRol(user)"
+                                   >
+                        </td>
                       </tr>
                     </tbody>
                     <tfoot>
