@@ -5,13 +5,16 @@
 cvApp.controller('UserController', function($scope, $http) {
 	$scope.API_url = 'http://api.cvonline.aliensoft.net';
 	$scope.user = {};
- 	$scope.user.isLogged = false;
+	$scope.user.isLogged = false;
+	$scope.isViewProfile = false;
 
  	$scope.template = {
 		"headerHome": "components/views/headers/header-home.html",
 		"partSlider": "components/views/partials/part-slider.html",
 		"header" : "components/views/headers/header.html",
-		"sidebar" : "components/views/partials/side-bar.html"
+		"sidebar": "components/views/partials/side-bar.html",
+		"viewProfile": "components/views/headers/View_Profile.html", //code added by Frank Javier 
+		"body": "components/views/body/body.html", //code added by Frank Javier 
 	}
 
 	window.fbAsyncInit = function() {
@@ -73,6 +76,30 @@ cvApp.controller('UserController', function($scope, $http) {
 		});
 		window.location.reload(false); 
 	};
+
+    //code added by Frank Javier
+	$scope.viewProfile = function () {
+	    //Codigo temporal
+        /*
+	    $scope.user.fb_id = "23498dkfjh234";
+	    $scope.user.email = "some@email.com";
+	    $scope.user.name = "Juan";
+	    $scope.user.lastname = "Perez";
+	    $scope.user.telephone = "809";
+	    $scope.user.webpage = "cv";
+	    $scope.user.updated_at = "2015";
+	    $scope.user.created_at = "2015";
+	    $scope.user.is_admin = 1;
+        */
+        //Codigo Temporal
+
+	    $scope.isViewProfile = true;
+	}
+
+	$scope.closeViewProfile = function () {
+	    $scope.isViewProfile = false;
+	};
+    //End code added.
 });
 
 	function checkFBloginStatus()
