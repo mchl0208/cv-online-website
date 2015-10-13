@@ -1,7 +1,7 @@
 /// <reference path="components/views/headers/View_Profile.html" />
 /// <reference path="components/views/headers/View_Profile.html" />
 //create a module cvApp
-var cvApp = angular.module('cvApp', ['ngRoute']);
+var cvApp = angular.module('cvApp', ['ngRoute', 'ui.bootstrap']);
 
 //Now Configure  our  routing
 cvApp.config(function($routeProvider, $locationProvider) {

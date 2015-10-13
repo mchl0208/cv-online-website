@@ -16,10 +16,25 @@
               <div class="">
                 <a id="logout" ng-click="fbLogOut()" class="btn btn-default btn-flat btn-header">{{'Logout'}}</a>
               </div>
+              <div class="">
+                <a id="delete-account btn-header" class="btn btn-default btn-flat btn-header" ng-click="openDeleteAccount()">Borrar Cuenta</a>
+              </div>
             </li>
           </ul>
         </li>
       </ul>
     </div>
+    <script type="text/ng-template" id="myModalContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title"> {{ "Aviso" }}</h3>
+        </div>
+        <div class="modal-body">
+            {{ "Está seguro que desea eliminar su cta?" }}
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
   </nav>
 </header>

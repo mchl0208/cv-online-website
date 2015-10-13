@@ -2,11 +2,18 @@
 
 // create the controller and inject Angular's $scope
 // set for Route Controller
-cvApp.controller('UserController', function($scope, $http) {
+cvApp.controller('UserController', function($scope, $http, $modal) {
 	$scope.API_url = 'http://api.cvonline.aliensoft.net';
 	$scope.user = {};
 	$scope.user.isLogged = false;
 	$scope.isViewProfile = false;
+
+ 	$scope.myInterval = 3000;
+	
+	$scope.slides = [
+		{ image: 'resources/images/Hombre-mirando-un-papel-frente-a-su-computadora.jpg' },
+		{ image: 'resources/images/how-to-make-your-resume-stand-out-tbjtuskp.jpg'}
+	];
 
  	$scope.template = {
 		"headerHome": "components/views/headers/header-home.html",
@@ -55,6 +62,22 @@ cvApp.controller('UserController', function($scope, $http) {
 	    );
 	};
 
+	$scope.logOutInAPI = function(session_id){
+		var method = '/user/logout';
+		var Furl = $scope.API_url + method;
+
+		$http({
+            url: Furl,
+            method: "POST",
+            data: {"X-Session-Id": $scope.user.session_id},
+            headers: {'Content-Type': 'application/json'}
+        }).then(function(response) {
+            //$scope.fbLogOut();
+            $scope.user = {};
+ 			$scope.user.isLogged = false;
+	    });
+	};
+
 	function RegisterInAPI(token){
 		var method = '/user/create';
 		var Furl = $scope.API_url + method;
@@ -69,10 +92,24 @@ cvApp.controller('UserController', function($scope, $http) {
 	    });
 	};
 
+	function DeleteAccount(){
+		var method = '/user/delete';
+		var Furl = $scope.API_url + method;
+
+		$http({
+            url: Furl,
+            method: "DELETE",
+            data: {},
+            headers: {'Content-Type': 'application/json', "X-Session-Id": $scope.user.session_id}
+        }).then(function(response) {
+            $scope.fbLogOut();
+	    });
+	};
+
+
 	$scope.fbLogOut = function () {
 		FB.logout(function(response) {
-			$scope.user = {};
- 			$scope.user.isLogged = false;
+ 			logOutInAPI();
 		});
 		window.location.reload(false); 
 	};
@@ -100,6 +137,25 @@ cvApp.controller('UserController', function($scope, $http) {
 	    $scope.isViewProfile = false;
 	};
     //End code added.
+	
+	$scope.openDeleteAccount = function (size) {
+
+	    var modalInstance = $modal.open({
+	      animation: false,
+	      templateUrl: 'myModalContent.html',
+	      controller: 'ModalInstanceCtrl',
+	      size: size
+	    });
+
+	    modalInstance.result.then(function (confirm) {
+	      if (confirm == true)
+	      {
+	      	DeleteAccount();
+	      }
+	    }, function () {
+	      //$log.info('Modal dismissed at: ' + new Date());
+	    });
+	};
 });
 
 	function checkFBloginStatus()
