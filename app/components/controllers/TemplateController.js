@@ -2,19 +2,17 @@
 
 // create the controller and inject Angular's $scope
 // set for Route Controller
-cvApp.controller('TemplateController', function($scope, Upload) {
+cvApp.controller('TemplateController', ['$scope','Upload', function ($scope, Upload) {
 
 	$scope.htmlControl = "";
 	$scope.previewControl = "";
-	$scope.cssControl = "";
-	$scope.sesion_id = "asdasddasd";
-	$scope.formData = {};
-	$scope.fromData.htmlText = "";
-	$scope.fromData.X-Session-Id = "asdasdasdasd";
-
 	$scope.model = {};
+	$scope.model.css = "";
+	$scope.model.html = "";
+	$scope.model["X-Session-Id"] = "62106fe2-2aeb-40d6-b71d-2bd0778a816f";
     $scope.selectedFile = [];
     $scope.uploadProgress = 0;
+    $scope.model.preview_image
 
 
 
@@ -26,20 +24,21 @@ cvApp.controller('TemplateController', function($scope, Upload) {
 		var iframeDoc = document.getElementById('preview-iframe').contentWindow.document;
 
 		var bootstrapcss = "<link rel='stylesheet' href='/resources/bootstrap/css/bootstrap.min.css' />";
-        html += bootstrapcss + '<style>' + $scope.cssControl + '</style>';
-		html += "</head> <body> " + $scope.htmlText + " </body> </html>" 
+        html += bootstrapcss + '<style>' + $scope.model.css + '</style>';
+		html += "</head> <body> " + $scope.model.html + " </body> </html>" 
 
 		$('#preview-iframe').contents().find('body').html(html);
 
 	}
 
 	$scope.uploadFile = function () {
-        var file = $scope.selectedFile[0];
-        $scope.upload = $upload.upload({
-            url: 'api/upload',
+        var file = $scope.selectedFile;
+        console.log(file);
+        $scope.upload = Upload.upload({
+            url: 'http://api.cvonline.aliensoft.net/template/create',
             method: 'POST',
-            data: angular.toJson($scope.model),
-            file: file
+            "Content-Type": 'multipart/form-data', 
+            data: $scope.model/*angular.toJson($scope.model)*/,
         }).progress(function (evt) {
             $scope.uploadProgress = parseInt(100.0 * evt.loaded / evt.total, 10);
         }).success(function (data) {
@@ -48,8 +47,10 @@ cvApp.controller('TemplateController', function($scope, Upload) {
     };
 
     $scope.onFileSelect = function ($files) {
+    	console.log("File: " + $files);
         $scope.uploadProgress = 0;
         $scope.selectedFile = $files;
+        $scope.model.preview_image = $files;
     };
 
 
@@ -77,7 +78,7 @@ cvApp.controller('TemplateController', function($scope, Upload) {
 	        });
 	};
 	
-});
+}]);
 
 cvApp.directive('progressBar', [
         function () {
