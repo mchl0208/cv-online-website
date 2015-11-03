@@ -21,6 +21,9 @@ cvApp.config(function($routeProvider, $locationProvider) {
     .when('/template/add', {
         templateUrl: '/components/views/partials/addTemplate.html'
     })
+    .when('/template/edit/:templateId?', {
+        templateUrl: '/components/views/partials/addTemplate.html'
+    })
 	// if not match with any route config then send to home page
 	.otherwise({
 		redirectTo: '/'

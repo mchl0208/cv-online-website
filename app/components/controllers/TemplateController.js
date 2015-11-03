@@ -2,19 +2,60 @@
 
 // create the controller and inject Angular's $scope
 // set for Route Controller
-cvApp.controller('TemplateController', ['$scope','Upload', function ($scope, Upload) {
+cvApp.controller('TemplateController', ['$scope','Upload', '$routeParams', function ($scope, Upload, $routeParams) {
 
+	$scope.tabs = [
+	    { title:'Dynamic Title 1', content:'Dynamic content 1' },
+	    { title:'Dynamic Title 2', content:'Dynamic content 2', disabled: true }
+	  ];
+
+	$scope.templateSelected = 0;
 	$scope.htmlControl = "";
 	$scope.previewControl = "";
 	$scope.model = {};
 	$scope.model.css = "";
 	$scope.model.html = "";
+	$scope.model.mobile_css = "";
+	$scope.model.mobile_html = "";
 	$scope.model["X-Session-Id"] = "62106fe2-2aeb-40d6-b71d-2bd0778a816f";
     $scope.selectedFile = [];
     $scope.uploadProgress = 0;
-    $scope.model.preview_image
+    $scope.model.preview_image;
+    $scope.model.mobile_preview_image;
 
 
+    var init = function () {
+        if ($routeParams.templateId) {
+        	//console.log($routeParams.templateId);
+            getTemplate($routeParams.templateId);
+        }
+    };
+
+    // fire on controller loaded
+    init();
+
+    function getTemplate (templateId) {
+		$.ajax({
+		  method: 'GET',
+		 url: 'http://api.cvonline.aliensoft.net/template/' + templateId,
+		 headers: {'Content-Type': 'application/json', "X-Session-Id": $scope.user.session_id},
+		 success: function(data) { 
+	        	$scope.model.name = data.name;
+				$scope.model.css = data.css;
+				$scope.model.html = data.html;
+				$scope.model.mobile_css = data.mobile_css;
+				$scope.model.mobile_html = data.mobile_html;
+				$scope.model.preview_image = data.preview_image;
+    			$scope.model.mobile_preview_image = data.mobile_preview_image;
+    			$scope.preview();
+
+				$scope.$apply();
+	        },
+	    error: function(data) { 
+	            return data;
+	        }
+		});
+	}
 
 	$scope.preview = function()
 	{
@@ -32,8 +73,6 @@ cvApp.controller('TemplateController', ['$scope','Upload', function ($scope, Upl
 	}
 
 	$scope.uploadFile = function () {
-        var file = $scope.selectedFile;
-        console.log(file);
         $scope.upload = Upload.upload({
             url: 'http://api.cvonline.aliensoft.net/template/create',
             method: 'POST',
@@ -42,14 +81,13 @@ cvApp.controller('TemplateController', ['$scope','Upload', function ($scope, Upl
         }).progress(function (evt) {
             $scope.uploadProgress = parseInt(100.0 * evt.loaded / evt.total, 10);
         }).success(function (data) {
-            //do something
+           window.location.href = '/';
         });
     };
 
     $scope.onFileSelect = function ($files) {
     	console.log("File: " + $files);
         $scope.uploadProgress = 0;
-        $scope.selectedFile = $files;
         $scope.model.preview_image = $files;
     };
 

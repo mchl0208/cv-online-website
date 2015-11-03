@@ -65,6 +65,11 @@
 
   <script type="text/javascript">
     $(document).ready(function() {
+
+      $('#myTabs a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+      })
       //htmlCodeMirror = CodeMirror.fromTextArea(document.getElementById("html-text"));
       //cssCodeMirror = CodeMirror.fromTextArea(document.getElementById("css-text"));
 
