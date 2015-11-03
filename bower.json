@@ -11,6 +11,8 @@
     "angular-route": "1.4.x",
     "angular-resource": "1.4.x",
     "angular-animate": "1.4.x",
-    "angular-bootstrap": "0.13.3"
+    "angular-bootstrap": "0.13.3",
+    "angular-ui-codemirror": "latest",
+    "ng-file-upload" : "latest"
   }
 }

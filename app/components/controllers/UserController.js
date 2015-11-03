@@ -104,6 +104,7 @@ cvApp.controller('UserController', function($scope, $http, $modal) {
         }).then(function(response) {
         	    $scope.user = response.data;
  				$scope.user.isLogged = true;
+ 				console.log($scope.user);
  				getRegisteredUsers();
 	        }, 
 	        function(response) { // optional

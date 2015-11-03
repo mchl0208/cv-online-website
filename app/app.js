@@ -1,7 +1,7 @@
 /// <reference path="components/views/headers/View_Profile.html" />
 /// <reference path="components/views/headers/View_Profile.html" />
 //create a module cvApp
-var cvApp = angular.module('cvApp', ['ngRoute', 'ui.bootstrap']);
+var cvApp = angular.module('cvApp', ['ngRoute', 'ui.bootstrap', 'ui.codemirror','ngFileUpload']);
 
 //Now Configure  our  routing
 cvApp.config(function($routeProvider, $locationProvider) {
@@ -17,6 +17,9 @@ cvApp.config(function($routeProvider, $locationProvider) {
     })
     .when('/user/profile', {
         templateUrl: '/components/views/body/body.html'
+    })
+    .when('/template/add', {
+        templateUrl: '/components/views/partials/addTemplate.html'
     })
 	// if not match with any route config then send to home page
 	.otherwise({
