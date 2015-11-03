@@ -27,6 +27,7 @@ cvApp.controller('TemplateController', ['$scope','Upload', '$routeParams', funct
     var init = function () {
         if ($routeParams.templateId) {
         	//console.log($routeParams.templateId);
+        	$scope.templateSelected = $routeParams.templateId;
             getTemplate($routeParams.templateId);
         }
     };
@@ -73,9 +74,28 @@ cvApp.controller('TemplateController', ['$scope','Upload', '$routeParams', funct
 	}
 
 	$scope.uploadFile = function () {
+		// if (!$scope.model.name)
+		// {
+		// 	var modalInstance = $modal.open({
+		//       animation: false,
+		//       templateUrl: 'RolUser.html',
+		//       controller: 'ModalInstanceCtrl',
+		//       //size: size
+		//     });
+		// }
+		var url = "";
+		var method = "";
+		if ($scope.templateSelected != 0) {
+			url = 'http://api.cvonline.aliensoft.net/template/' + $scope.templateSelected + '/edit';
+            method = 'POST';
+		}
+		else{
+			url = 'http://api.cvonline.aliensoft.net/template/create';
+            method = 'POST';
+		}
         $scope.upload = Upload.upload({
-            url: 'http://api.cvonline.aliensoft.net/template/create',
-            method: 'POST',
+            url: url,
+            method: method,
             "Content-Type": 'multipart/form-data', 
             data: $scope.model/*angular.toJson($scope.model)*/,
         }).progress(function (evt) {
