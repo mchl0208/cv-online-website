@@ -8,7 +8,11 @@ cvApp.controller('UserController', function($scope, $http, $modal) {
 	$scope.user.isLogged = false;
 	$scope.isViewProfile = true;
  	$scope.registeredUsers = [];
-
+	//Code added Frank Javier
+	$scope.templateArray = [];
+    $scope.myTemplate = $scope.templateArray[2];
+	//-----------------------
+	
  	$scope.myInterval = 3000;
 	
 	$scope.slides = [
@@ -56,6 +60,37 @@ cvApp.controller('UserController', function($scope, $http, $modal) {
 		    }
 		});
 	};
+	
+	//code added by Frank JAvier 
+	$http.get('http://api.cvonline.aliensoft.net/template/list')
+	.success(function (response, status) {
+		$scope.templateArray = response.templates;
+		/*
+		for (var i = 0; i < $scope.templateArray.length; i++){
+			console.log($scope.templateArray[i]);
+		}
+		*/
+	})
+	.error(function () {
+		console.log('dio un error: ' + response);
+	});
+	
+	$scope.preview = function()
+	{
+		var html = "<html> <head> ";
+		var bootstrapcss = "<link rel='stylesheet' href='/resources/bootstrap/css/bootstrap.min.css' />";
+        html += bootstrapcss + '<style>' + this.myTemplate.css + '</style>';
+		html += "</head> <body> " + this.myTemplate.html + " </body> </html>" 
+
+		$('#preview-iframe').contents().find('body').html(html);
+
+	}
+	
+	$scope.edit = function(){
+		window.location.href = '/template/edit/' + this.myTemplate.id;
+		//alert('/template/edit/' + this.myTemplate.id);
+	}
+	//-------------------------------------
 
 	$scope.changeRol = function(user){
 

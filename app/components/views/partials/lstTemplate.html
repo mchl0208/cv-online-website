@@ -1,0 +1,43 @@
+<form role="form">
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <select class="form-control" size="5"  ng-model="myTemplate"  ng-options="temp.name for temp in templateArray track by temp.id" ng-change="preview()">
+
+                </select>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-1"></div>
+            <!--<button type="button" class="btn btn-primary btn-sm" id="select-template-btn" ng-click="edit()">Editar Tema</button>-->
+			<a ng-href="/template/edit/{{myTemplate.id}}"><span style="margin-left: 15px;">Editar Tema</span></a>
+        </div>
+        <div class="col-md-4"></div>
+		<h3>Vista Previa</h3>
+		<div class="row">
+		  <div class="col-md-1"></div>
+		  <div class="col-md-10">
+			  <iframe id="preview-iframe" style="">
+			  </iframe>
+		  </div>
+		  <div class="col-md-1"></div>
+		</div>
+    </div>
+    </div>
+</form>
+<!--
+<script type="text/javascript">
+    var templates = <%- JSON.stringify(templates) %>;
+
+    function templateSelected() {
+        var e = document.getElementById("template-select");
+        var i = e.options[e.selectedIndex].value;
+        window.location = "/admin/edit_template/"+templates[i].id;
+
+    }
+</script>
+-->

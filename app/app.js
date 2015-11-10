@@ -23,6 +23,11 @@ cvApp.config(function($routeProvider, $locationProvider) {
     })
     .when('/template/edit/:templateId?', {
         templateUrl: '/components/views/partials/addTemplate.html'
+		,controller: 'TemplateController'
+    })
+	.when('/template/lst', {
+        templateUrl: '/components/views/partials/lstTemplate.html'/*,
+        controller: 'UserController'*/
     })
 	// if not match with any route config then send to home page
 	.otherwise({
