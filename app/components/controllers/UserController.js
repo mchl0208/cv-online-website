@@ -75,12 +75,42 @@ cvApp.controller('UserController', function($scope, $http, $modal) {
 		console.log('dio un error: ' + response);
 	});
 	
-	$scope.preview = function()
+	$scope.enable = function(idNumber){
+		var method = '/template/' + idNumber.toString() + '/enable';
+		var Furl = $scope.API_url + method;
+
+		$http({
+            url: Furl,
+            method: "POST",
+            data: {},
+            headers: {'X-Session-Id.': $scope.user.session_id}
+        }).success(function(response) {
+        	    alert('funciono');
+	        }
+	    );
+	}
+	
+	$scope.disable = function(idNumber){
+		var method = '/template/' + idNumber.toString() + '/disable';
+		var Furl = $scope.API_url + method;
+
+		$http({
+            url: Furl,
+            method: "POST",
+            data: {},
+            headers: {'X-Session-Id.': $scope.user.session_id}
+        }).success(function(response) {
+        	    alert('funciono');
+	        }
+	    );
+	}
+	
+	$scope.preview = function(myHtml, css)
 	{
 		var html = "<html> <head> ";
 		var bootstrapcss = "<link rel='stylesheet' href='/resources/bootstrap/css/bootstrap.min.css' />";
-        html += bootstrapcss + '<style>' + this.myTemplate.css + '</style>';
-		html += "</head> <body> " + this.myTemplate.html + " </body> </html>" 
+        html += bootstrapcss + '<style>' + css + '</style>';
+		html += "</head> <body> " + myHtml + " </body> </html>" 
 
 		$('#preview-iframe').contents().find('body').html(html);
 

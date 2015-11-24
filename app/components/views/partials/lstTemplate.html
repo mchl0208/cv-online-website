@@ -3,9 +3,41 @@
         <div class="row">
             <div class="col-md-2"></div>
             <div class="col-md-8">
-                <select class="form-control" size="5"  ng-model="myTemplate"  ng-options="temp.name for temp in templateArray track by temp.id" ng-change="preview()">
+                <!--<select class="form-control" size="5"  ng-model="myTemplate"  ng-options="temp.name for temp in templateArray track by temp.id" ng-change="preview()">
 
-                </select>
+                </select>-->
+				<h3>Templates</h3>
+				<div style="height: 200px; overflow: scroll;">
+					<table class="table table-striped">
+					  <thead>
+						<tr>
+						  <th>View</th>
+						  <th>Edit</th>
+						  <th>Template</th>
+						  <th></th>
+						</tr>
+					  </thead>
+					  <tbody>
+						<tr ng-repeat="temp in templateArray">
+						  <td>
+							<a href="#" ng-click="preview(temp.html, temp.css)"><span>Ver</span></a>
+						  </td>
+						  <td>
+						  <a ng-href="/template/edit/{{temp.id}}"><span>Editar</span></a>
+							<!--
+							<button class="btn" ng-click="editUser(temp.id)">
+							  <span class="glyphicon glyphicon-pencil"></span>  Edit
+							</button>
+							-->
+						  </td>
+						  <td><span>{{ temp.name }}</span></td>
+						  <td>
+							<a href="#" ng-click="enable(temp.id)">Enable</a> | <a href="#" ng-click="disable(temp.id)">Disable</a>
+						  </td>
+						</tr>
+					  </tbody>
+					</table>
+				</div>
             </div>
             <div class="col-md-2"></div>
         </div>
@@ -14,7 +46,7 @@
             <div class="col-md-4"></div>
             <div class="col-md-1"></div>
             <!--<button type="button" class="btn btn-primary btn-sm" id="select-template-btn" ng-click="edit()">Editar Tema</button>-->
-			<a ng-href="/template/edit/{{myTemplate.id}}"><span style="margin-left: 15px;">Editar Tema</span></a>
+			<!--<a ng-href="/template/edit/{{myTemplate.id}}"><span style="margin-left: 15px;">Editar Tema</span></a>-->
         </div>
         <div class="col-md-4"></div>
 		<h3>Vista Previa</h3>
