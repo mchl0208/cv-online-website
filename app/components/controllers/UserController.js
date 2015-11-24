@@ -79,26 +79,22 @@ cvApp.controller('UserController', function($scope, $http, $modal) {
 		var method = '/template/' + idNumber.toString() + '/enable';
 		var Furl = $scope.API_url + method;
 
-		$http({
-            url: Furl,
-            method: "POST",
-            data: {},
-            headers: {'X-Session-Id.': $scope.user.session_id}
-        }).success(function(response) {
-        	    alert('funciono');
-	        }
-	    );
+		callDisableEnable(Furl, $scope.user.session_id);
 	}
 	
 	$scope.disable = function(idNumber){
 		var method = '/template/' + idNumber.toString() + '/disable';
 		var Furl = $scope.API_url + method;
 
+		callDisableEnable(Furl, $scope.user.session_id);
+	}
+	
+	function callDisableEnable(urlPath, session){
 		$http({
-            url: Furl,
+            url: urlPath,
             method: "POST",
             data: {},
-            headers: {'X-Session-Id.': $scope.user.session_id}
+            headers: {'X-Session-Id.': session}
         }).success(function(response) {
         	    alert('funciono');
 	        }
