@@ -22,6 +22,8 @@ cvApp.controller('TemplateController', ['$scope','Upload', '$routeParams', funct
     $scope.uploadProgress = 0;
     $scope.model.preview_image;
     $scope.model.mobile_preview_image;
+	$scope.UrlAPI = "http://api.cvonline.aliensoft.net";
+	//$scope.UrlAPI = 'http://private-62139-cvonline.apiary-mock.com/';
 
 
     var init = function () {
@@ -38,7 +40,7 @@ cvApp.controller('TemplateController', ['$scope','Upload', '$routeParams', funct
     function getTemplate (templateId) {
 		$.ajax({
 		  method: 'GET',
-		 url: 'http://api.cvonline.aliensoft.net/template/' + templateId,
+		 url: $scope.UrlAPI + '/template/' + templateId,
 		 headers: {'Content-Type': 'application/json', "X-Session-Id": $scope.user.session_id},
 		 success: function(data) { 
 	        	$scope.model.name = data.name;
@@ -86,11 +88,11 @@ cvApp.controller('TemplateController', ['$scope','Upload', '$routeParams', funct
 		var url = "";
 		var method = "";
 		if ($scope.templateSelected != 0) {
-			url = 'http://api.cvonline.aliensoft.net/template/' + $scope.templateSelected + '/edit';
+			url = $scope.UrlAPI + '/template/' + $scope.templateSelected + '/edit';
             method = 'POST';
 		}
 		else{
-			url = 'http://api.cvonline.aliensoft.net/template/create';
+			url = $scope.UrlAPI + '/template/create';
             method = 'POST';
 		}
         $scope.upload = Upload.upload({
@@ -117,7 +119,7 @@ cvApp.controller('TemplateController', ['$scope','Upload', '$routeParams', funct
 	$scope.processForm = function() {
 		$http({
 	        method  : 'POST',
-	        url     : 'http://api.cvonline.aliensoft.net/template/create',
+	        url     : $scope.UrlAPI + '/template/create',
 	        data    : $.param($scope.formData),  // pass in data as strings
 	        headers : { 'Content-Type': 'multipart/form-data' }  // set the headers so angular passing info as form data (not request payload)
 	    })

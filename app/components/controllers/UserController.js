@@ -4,6 +4,7 @@
 // set for Route Controller
 cvApp.controller('UserController', function($scope, $http, $modal) {
 	$scope.API_url = 'http://api.cvonline.aliensoft.net';
+	//$scope.API_url = 'http://private-62139-cvonline.apiary-mock.com/';
 	$scope.user = {};
 	$scope.user.isLogged = false;
 	$scope.isViewProfile = true;
@@ -32,7 +33,7 @@ cvApp.controller('UserController', function($scope, $http, $modal) {
 	function getRegisteredUsers () {
 		$.ajax({
 		  method: 'GET',
-		 url: 'http://api.cvonline.aliensoft.net/user/list',
+		 url: $scope.API_url + '/user/list',
 		 headers: {'Content-Type': 'application/json', "X-Session-Id": $scope.user.session_id},
 		 success: function(data) { 
 	            $scope.registeredUsers = (data.users);
@@ -62,7 +63,7 @@ cvApp.controller('UserController', function($scope, $http, $modal) {
 	};
 	
 	//code added by Frank JAvier 
-	$http.get('http://api.cvonline.aliensoft.net/template/list')
+	$http.get($scope.API_url + '/template/list')
 	.success(function (response, status) {
 		$scope.templateArray = response.templates;
 		/*
@@ -98,7 +99,10 @@ cvApp.controller('UserController', function($scope, $http, $modal) {
         }).success(function(response) {
         	    alert('funciono');
 	        }
-	    );
+	    ).error(function(myError){
+			
+			alert(myError);
+		});
 	}
 	
 	$scope.preview = function(myHtml, css)
