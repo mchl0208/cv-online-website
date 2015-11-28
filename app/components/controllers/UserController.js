@@ -76,35 +76,58 @@ cvApp.controller('UserController', function($scope, $http, $modal) {
 		console.log('dio un error: ' + response);
 	});
 	
-	$scope.enable = function(idNumber){
+	$scope.changeStatus = function(Template){
+		//console.log(Template);
+		var method = '/template/' + Template.temp.id.toString() + (Template.temp.is_disabled == true ? '/enable': '/disable');
+		var Furl = $scope.API_url + method;
+		
+		$http({
+            url: Furl,
+            method: "POST",
+            data: {},
+            headers: {'Content-Type': 'application/json', 'X-Session-Id': $scope.user.session_id}
+        }).success(function(response) {
+        	    alert('Información guardada correctamente.');
+				Template.temp.is_disabled = !Template.temp.is_disabled;
+				//$scope.$apply();
+	        }
+	    ).error(function(myError){
+			
+			alert("Ha ocurrido un error, por favor verificar.");
+		});
+	}
+/*	
+	$scope.enable = function(idNumber, idControl){
 		var method = '/template/' + idNumber.toString() + '/enable';
 		var Furl = $scope.API_url + method;
 
-		callDisableEnable(Furl, $scope.user.session_id);
+		callDisableEnable(Furl, $scope.user.session_id, idControl);
 	}
 	
-	$scope.disable = function(idNumber){
+	$scope.disable = function(idNumber, idControl){
 		var method = '/template/' + idNumber.toString() + '/disable';
 		var Furl = $scope.API_url + method;
 
-		callDisableEnable(Furl, $scope.user.session_id);
+		callDisableEnable(Furl, $scope.user.session_id, idControl);
 	}
 	
-	function callDisableEnable(urlPath, session){
+
+	function callDisableEnable(urlPath, session, idControl){
+	alert(idControl);
 		$http({
             url: urlPath,
             method: "POST",
             data: {},
-            headers: {'X-Session-Id.': session}
+            headers: {'Content-Type': 'application/json', 'X-Session-Id': session}
         }).success(function(response) {
-        	    alert('funciono');
+        	    alert('Información guardada correctamente.');
 	        }
 	    ).error(function(myError){
 			
-			alert(myError);
+			alert("Ha ocurrido un error, por favor verificar.");
 		});
 	}
-	
+*/	
 	$scope.preview = function(myHtml, css)
 	{
 		var html = "<html> <head> ";
@@ -141,7 +164,7 @@ cvApp.controller('UserController', function($scope, $http, $modal) {
 	            url: Furl,
 	            method: "PUT",
 	            data: {is_admin : user.is_admin ? 1 : 0},
-	            headers: {'Content-Type': 'application/json', "X-Session-Id": $scope.user.session_id}
+	            headers: {"X-Session-Id": $scope.user.session_id}
 	        }).then(function(response) {
 		        	
 		        }, 
