@@ -10,6 +10,7 @@ cvApp.controller('UserController', function($scope, $http, $modal) {
 	$scope.isViewProfile = true;
  	$scope.registeredUsers = [];
 	//Code added Frank Javier
+	$scope.userImage = "";
 	$scope.templateArray = [];
     $scope.myTemplate = $scope.templateArray[2];
 	//-----------------------
@@ -192,6 +193,10 @@ cvApp.controller('UserController', function($scope, $http, $modal) {
         }).then(function(response) {
         	    $scope.user = response.data;
  				$scope.user.isLogged = true;
+				//code added by Frank Javier
+				$scope.userImage = $scope.user.user_data.profile_picture_url; 
+				$scope.userImage = (!$scope.userImage) ? '/resources/dist/img/user2-160x160.jpg' : $scope.userImage;
+				//--------------------------
  				console.log($scope.user);
  				getRegisteredUsers();
 	        }, 
