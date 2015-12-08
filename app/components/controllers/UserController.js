@@ -3,8 +3,8 @@
 // create the controller and inject Angular's $scope
 // set for Route Controller
 cvApp.controller('UserController', function($scope, $http, $modal) {
-	$scope.API_url = 'http://api.cvonline.aliensoft.net';
-	//$scope.API_url = 'http://private-62139-cvonline.apiary-mock.com/';
+	//$scope.API_url = 'http://api.cvonline.aliensoft.net';
+	$scope.API_url = 'http://cvonline.aliensoft.net';
 	$scope.user = {};
 	$scope.user.isLogged = false;
 	$scope.isViewProfile = true;
