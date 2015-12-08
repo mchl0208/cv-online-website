@@ -3,8 +3,8 @@
 // create the controller and inject Angular's $scope
 // set for Route Controller
 cvApp.controller('UserController', function($scope, $http, $modal) {
-	$scope.API_url = 'http://api.cvonline.aliensoft.net';
-	//$scope.API_url = 'http://cvonline.aliensoft.net';
+	//$scope.API_url = 'http://api.cvonline.aliensoft.net';
+	$scope.API_url = 'http://cvonline.aliensoft.net';
 	$scope.user = {};
 	$scope.user.isLogged = false;
 	$scope.isViewProfile = true;
@@ -195,7 +195,7 @@ cvApp.controller('UserController', function($scope, $http, $modal) {
  				$scope.user.isLogged = true;
 				//code added by Frank Javier
 				$scope.userImage = $scope.user.user_data.profile_picture_url; 
-				$scope.userImage = (!$scope.userImage) ? '/resources/dist/img/user2-160x160.jpg' : $scope.userImage;
+				$scope.userImage = (!$scope.userImage) ? '/resources/dist/img/user2-160x160.jpg' : $scope.API_url + '/' + $scope.userImage;
 				//--------------------------
  				console.log($scope.user);
  				getRegisteredUsers();
