@@ -22,8 +22,8 @@ cvApp.controller('TemplateController', ['$scope','Upload', '$routeParams', funct
     $scope.uploadProgress = 0;
     $scope.model.preview_image;
     $scope.model.mobile_preview_image;
-	$scope.UrlAPI = "http://api.cvonline.aliensoft.net";
-	//$scope.UrlAPI = 'http://private-62139-cvonline.apiary-mock.com/';
+	//$scope.UrlAPI = "http://api.cvonline.aliensoft.net";
+	$scope.UrlAPI = 'http://cvonline.aliensoft.net';
 
 
     var init = function () {
